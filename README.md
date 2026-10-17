@@ -210,7 +210,10 @@ When resolving a map for a preference list, `i18n`:
 2. Drops root / `und` (`Tag{}`) entries from the requested preferences.
 3. Uses `language.NewMatcher(...).Match(preferences...)` to pick the best match — this gives
    real negotiation, so a request for `zh-HK` can still fall back to `zh`, etc.
-4. If nothing matches (`language.No`), falls back to the **lexicographically smallest key
+4. When several candidates score equally (e.g. both `zh` and `zh-CN` satisfy a `zh` request),
+   the lexicographically smallest key wins, so the outcome never depends on map iteration
+   order.
+5. If nothing matches (`language.No`), falls back to the **lexicographically smallest key
    with a non-empty value**, so the result stays deterministic regardless of map iteration
    order.
 

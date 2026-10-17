@@ -81,6 +81,8 @@ func (m I18n) bestKey(locales Tags) (string, bool) {
 		return "", false
 	}
 
+	sort.Slice(entries, func(i, j int) bool { return entries[i].key < entries[j].key })
+
 	tags := make([]language.Tag, len(entries))
 	for i, e := range entries {
 		tags[i] = e.tag
